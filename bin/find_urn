@@ -1,0 +1,24 @@
+#!/usr/bin/env ruby
+
+require_relative '../lib/nb_urn_client'
+require 'optparse'
+parent_folder = File.expand_path(File.join(File.dirname(__FILE__), '..'))
+default_config = File.join(parent_folder, 'config', 'config.yml')
+
+options = {}
+OptionParser.new do |opts|
+  opts.banner = "Usage find_urn --urn [URN]"
+  opts.on("--urn URN", String, "The URN to search for") do |urn|
+    options[:urn] = urn
+  end
+  opts.on("--config", String, "A YAML config file") do |config|
+    options[:config] = config
+  end
+end.parse!
+
+if options[:urn]
+  c = NbUrnClient.new(opts={config_file: options[:config] ||= default_config})
+  puts c.find_urn(options[:urn]).to_s
+else
+  puts "Usage: find_urn --urn URN"
+end

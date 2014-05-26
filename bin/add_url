@@ -1,0 +1,31 @@
+#!/usr/bin/env ruby
+
+require_relative '../lib/nb_urn_client'
+require 'optparse'
+parent_folder = File.expand_path(File.join(File.dirname(__FILE__), '..'))
+default_config = File.join(parent_folder, 'config', 'config.yml')
+
+options = {}
+OptionParser.new do |opts|
+  opts.banner = "Usage find_urn --urn [URN]"
+  opts.on("--urn URN", String, "The URN to add") do |urn|
+    options[:urn] = urn
+  end
+  opts.on("--url URL", String, "The URL to set for the URN") do |url|
+    options[:url] = url
+  end
+  opts.on("--config", String, "A YAML config file") do |config|
+    options[:config] = config
+  end
+end.parse!
+
+if options[:urn] and options[:url]
+  c = NbUrnClient.new(opts={
+                        username: options[:username],
+                        password: options[:password],
+                        config_file: options[:config] ||= default_config
+                      })
+  puts c.add_url(options[:urn], options[:url]).to_s
+else
+  puts "Usage: add_url --urn URN --url URL"
+end

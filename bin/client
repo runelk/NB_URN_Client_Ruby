@@ -1,0 +1,16 @@
+#!/usr/bin/env ruby
+
+require_relative '../lib/nb_urn_client'
+
+c = NBURNClient.new
+urn = "URN:NBN:no-27984"
+url = "https://www.duo.uio.no/handle/10852/13515"
+
+puts ""
+puts "Testing find_urn (%s) ..." % urn
+puts c.find_urn(urn).to_s
+puts ""
+puts "Testing find_urns_for_url (%s) ..." % url
+puts c.find_urns_for_url(url)
+puts ""
+# puts c.add_url("", "")

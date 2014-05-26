@@ -1,0 +1,37 @@
+#!/usr/bin/env ruby
+
+require_relative '../lib/nb_urn_client'
+require 'optparse'
+parent_folder = File.expand_path(File.join(File.dirname(__FILE__), '..'))
+default_config = File.join(parent_folder, 'config', 'config.yml')
+
+options = {}
+OptionParser.new do |opts|
+  opts.banner = "Usage: register_urn --urn URN --url URL"
+  opts.on("--urn URN", String, "The URN to set a default URL for") do |urn|
+    options[:urn] = urn
+  end
+  opts.on("--urn URL", String, "The default URL to set for the URN") do |url|
+    options[:url] = url
+  end
+  opts.on("--username USERNAME", String, "Username (if not provided by the config file)") do |username|
+    options[:username] = username
+  end
+  opts.on("--password USERNAME", String, "Password (if not provided by the config file)") do |password|
+    options[:password] = password
+  end
+  opts.on("--config", String, "A YAML config file") do |config|
+    options[:config] = config
+  end
+end.parse!
+
+if options[:series_code] 
+  c = NbUrnClient.new(opts={
+                        username: options[:username],
+                        password: options[:password],
+                        config_file: options[:config] ||= default_config
+                      })
+  puts c.set_default_url(options[:urn], options[:url]).to_s
+else
+  puts "Usage: set_default_url --urn URN --url URL"
+end

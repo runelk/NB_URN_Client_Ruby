@@ -1,0 +1,39 @@
+#!/usr/bin/env ruby
+
+require_relative '../lib/nb_urn_client'
+require 'optparse'
+parent_folder = File.expand_path(File.join(File.dirname(__FILE__), '..'))
+default_config = File.join(parent_folder, 'config', 'config.yml')
+
+options = {}
+OptionParser.new do |opts|
+  opts.on("--urn URN", String, "The URN to add") do |urn|
+    options[:urn] = urn
+  end
+  opts.on("--url-old URL", String, "The URL old to replace with a new URL") do |url_old|
+    options[:url_old] = url_old
+  end
+  opts.on("--url-new URL", String, "The new URL") do |url_new|
+    options[:url_new] = url_new
+  end
+  opts.on("--username USERNAME", String, "Username (if not provided by the config file)") do |username|
+    options[:username] = username
+  end
+  opts.on("--password USERNAME", String, "Password (if not provided by the config file)") do |password|
+    options[:password] = password
+  end
+  opts.on("--config", String, "A YAML config file") do |config|
+    options[:config] = config
+  end
+end.parse!
+
+if options[:urn] and options[:url_old] and options[:url_new]
+  c = NbUrnClient.new(opts={
+                        username: options[:username],
+                        password: options[:password],
+                        config_file: options[:config] ||= default_config
+                      })
+  puts c.replace_url(options[:urn], options[:url_old], options[:url_new]).to_s
+else
+  puts "Usage: add_url --urn URN --url-old URL --url-new URL"
+end
