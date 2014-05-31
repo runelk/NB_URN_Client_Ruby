@@ -20,106 +20,98 @@ class NbUrnClient
   end
 
   def add_url(urn, url)
-    raise NotImplementedError
-    # if @sso_token
-    #   pass
-    # else
-    #   raise SsoTokenError("No SSO token available. You need to login first.")
-    # end
+    if @sso_token
+      return @client.addURL(@sso_token, urn, url)
+    else
+      raise SsoTokenError("No SSO token available. You need to login first.")
+    end
   end
   
   def create_urn(series_code, url)
-    raise NotImplementedError
-    # if @sso_token
-    #   pass
-    # else
-    #   raise SsoTokenError("No SSO token available. You need to login first.")
-    # end
+    if @sso_token
+      return @client.createURN(@sso_token, series_code, url)
+    else
+      raise SsoTokenError("No SSO token available. You need to login first.")
+    end
   end
 
   def delete_url(urn, url)
-    raise NotImplementedError
-    # if @sso_token
-    #   pass
-    # else
-    #   raise SsoTokenError("No SSO token available. You need to login first.")
-    # end
+    if @sso_token
+      return @client.deleteURL(@sso_token, urn, url)
+    else
+      raise SsoTokenError("No SSO token available. You need to login first.")
+    end
   end
 
   def find_urn(urn)
-    c = @client.findURN({'URN' => urn})
-    return c
+    return @client.findURN({'URN' => urn})
   end
 
   def find_urns_for_url(url)
-    c = @client.findURNsForURL({'URL' => url})
-    return c
+    return @client.findURNsForURL({'URL' => url})
   end
 
   def get_next_urn(series_code)
-    raise NotImplementedError
-    # if @sso_token
-    #   pass
-    # else
-    #   raise SsoTokenError("No SSO token available. You need to login first.")
-    # end
+    if @sso_token
+      return @client.getNextURN(@sso_token, series_code)
+    else
+      raise SsoTokenError("No SSO token available. You need to login first.")
+    end
   end
 
-  def login(username, password)
-    return
+  def login()
+    return @client.login(@client.config['username'], @client.config['password'])
   end
+
+  # def login(username, password)
+  #   return @client.login(username, password)
+  # end
 
   def logout()
-    raise NotImplementedError
-  #   if @sso_token
-  #     @client.service.logout(@sso_token)
-  #     @sso_token = nil
-  #   end
+    if @sso_token
+      @client.service.logout(@sso_token)
+      @sso_token = nil
+    end
   end
 
   def register_urn(urn, url)
-    raise NotImplementedError
-    # if @sso_token
-    #   pass
-    # else
-    #   raise SsoTokenError("No SSO token available. You need to login first.")
-    # end
+    if @sso_token
+      return @client.registerURN(@sso_token, urn, url)
+    else
+      raise SsoTokenError("No SSO token available. You need to login first.")
+    end
   end
 
   def replace_url(urn, old_url, new_url)
-    raise NotImplementedError
-    # if @sso_token
-    #   pass
-    # else
-    #   raise SsoTokenError("No SSO token available. You need to login first.")
-    # end
+    if @sso_token
+      return @client.replareURL(sso_token, urn, old_urn, new_url)
+    else
+      raise SsoTokenError("No SSO token available. You need to login first.")
+    end
   end
 
   def reserve_next_urn(series_code)
-    raise NotImplementedError
-    # if @sso_token
-    #   pass
-    # else
-    #   raise SsoTokenError("No SSO token available. You need to login first.")
-    # end
+    if @sso_token
+      return @client.reserveNextURN(@sso_token, series_code)
+    else
+      raise SsoTokenError("No SSO token available. You need to login first.")
+    end
   end
 
   def reserve_urn(urn)
-    raise NotImplementedError
-    # if @sso_token
-    #   pass
-    # else
-    #   raise SsoTokenError("No SSO token available. You need to login first.")
-    # end
+    if @sso_token
+      return @client.reserveURN(@sso_token, urn)
+    else
+      raise SsoTokenError("No SSO token available. You need to login first.")
+    end
   end
 
   def set_default_url(urn, url)
-    raise NotImplementedError
-    # if @sso_token
-    #   pass
-    # else
-    #   raise SsoTokenError("No SSO token available. You need to login first.")
-    # end
+    if @sso_token
+      return @client.setDefaultURL(@sso_token, urn, url)
+    else
+      raise SsoTokenError("No SSO token available. You need to login first.")
+    end
   end
 end
 
