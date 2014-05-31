@@ -1,0 +1,36 @@
+#!/usr/bin/env ruby
+
+require_relative '../lib/nb_urn_client'
+require 'optparse'
+parent_folder = File.expand_path(File.join(File.dirname(__FILE__), '..'))
+default_config = File.join(parent_folder, 'config', 'config.yml')
+
+options = {}
+OptionParser.new do |opts|
+  opts.on("--series-code CODE", String, "The series code under which to add a URN") do |series_code|
+    options[:series_code] = series_code
+  end
+  opts.on("--url URL", String, "The URL to add to the created URN") do |url|
+    options[:url] = url
+  end
+  opts.on("--username USERNAME", String, "Username (if not provided by the config file)") do |username|
+    options[:username] = username
+  end
+  opts.on("--password USERNAME", String, "Password (if not provided by the config file)") do |password|
+    options[:password] = password
+  end
+  opts.on("--config", String, "A YAML config file") do |config|
+    options[:config] = config
+  end
+end.parse!
+
+if options[:urn] and options[:url_old] and options[:url_new]
+  c = NbUrnClient.new(opts={
+                        username: options[:username],
+                        password: options[:password],
+                        config_file: options[:config] ||= default_config
+                      })
+  puts c.create_urn(options[:series_code], options[:url]).to_s
+else
+  puts "Usage: create_urn --series-code CODE --url URL"
+end
