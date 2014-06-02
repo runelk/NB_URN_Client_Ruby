@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+$VERBOSE=nil
 
 require_relative '../lib/nb_urn_client'
 require 'optparse'
@@ -20,5 +21,5 @@ if options[:urn]
   c = NbUrnClient.new(opts={config_file: options[:config] ||= default_config})
   puts c.find_urn(options[:urn]).to_s
 else
-  puts "Usage: find_urn --urn URN"
+  $stderr.puts "Usage: find_urn --urn URN"
 end

@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+$VERBOSE=nil
 
 require_relative '../lib/nb_urn_client'
 require 'optparse'
@@ -29,5 +30,5 @@ if options[:series_code]
                       })
   puts c.get_next_urn(options[:series_code]).to_s
 else
-  puts "Usage: get_next_urn --series-code CODE"
+  $stderr.puts "Usage: get_next_urn --series-code CODE"
 end

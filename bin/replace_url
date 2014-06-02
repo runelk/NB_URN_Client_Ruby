@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+$VERBOSE=nil
 
 require_relative '../lib/nb_urn_client'
 require 'optparse'
@@ -10,11 +11,11 @@ OptionParser.new do |opts|
   opts.on("--urn URN", String, "The URN to add") do |urn|
     options[:urn] = urn
   end
-  opts.on("--url-old URL", String, "The URL old to replace with a new URL") do |url_old|
-    options[:url_old] = url_old
+  opts.on("--url-old URL", String, "The URL old to replace with a new URL") do |old_url|
+    options[:old_url] = old_url
   end
-  opts.on("--url-new URL", String, "The new URL") do |url_new|
-    options[:url_new] = url_new
+  opts.on("--url-new URL", String, "The new URL") do |new_url|
+    options[:new_url] = new_url
   end
   opts.on("--username USERNAME", String, "Username (if not provided by the config file)") do |username|
     options[:username] = username
@@ -27,7 +28,7 @@ OptionParser.new do |opts|
   end
 end.parse!
 
-if options[:urn] and options[:url_old] and options[:url_new]
+if options[:urn] and options[:old_url] and options[:new_url]
   c = NbUrnClient.new(opts={
                         username: options[:username],
                         password: options[:password],
@@ -35,5 +36,5 @@ if options[:urn] and options[:url_old] and options[:url_new]
                       })
   puts c.replace_url(options[:urn], options[:url_old], options[:url_new]).to_s
 else
-  puts "Usage: add_url --urn URN --url-old URL --url-new URL"
+  $stderr.puts "Usage: replace_url --urn URN --old-url URL --new-url URL"
 end
