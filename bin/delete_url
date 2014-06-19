@@ -20,7 +20,7 @@ OptionParser.new do |opts|
   opts.on("--password USERNAME", String, "Password (if not provided by the config file)") do |password|
     options[:password] = password
   end
-  opts.on("--config", String, "A YAML config file") do |config|
+  opts.on("--config CONFIG", String, "A YAML config file") do |config|
     options[:config] = config
   end
 end.parse!
@@ -31,7 +31,9 @@ if options[:urn] and options[:url]
                         password: options[:password],
                         config_file: options[:config] ||= default_config
                       })
+  c.login
   puts c.delete_url(options[:urn], options[:url]).to_s
+  c.logout
 else
   $stderr.puts "Usage: delete_url --urn URN --url URL"
 end

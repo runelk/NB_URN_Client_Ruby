@@ -13,7 +13,7 @@ OptionParser.new do |opts|
   opts.on("-u", "--url URL", String, "The URL to find URNs for") do |url|
     options[:url] = url
   end
-  opts.on("--config", String, "A YAML config file") do |config|
+  opts.on("--config CONFIG", String, "A YAML config file") do |config|
     options[:config] = config
   end
 end.parse!

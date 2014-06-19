@@ -12,8 +12,8 @@ OptionParser.new do |opts|
   opts.on("--urn URN", String, "The URN to register") do |urn|
     options[:urn] = urn
   end
-  opts.on("--url URL", String, "The URL the URN should point to") do |url_old|
-    options[:url_old] = url_old
+  opts.on("--url URL", String, "The URL the URN should point to") do |url|
+    options[:url] = url
   end
   opts.on("--username USERNAME", String, "Username (if not provided by the config file)") do |username|
     options[:username] = username
@@ -21,18 +21,22 @@ OptionParser.new do |opts|
   opts.on("--password USERNAME", String, "Password (if not provided by the config file)") do |password|
     options[:password] = password
   end
-  opts.on("--config", String, "A YAML config file") do |config|
+  opts.on("--config CONFIG", String, "A YAML config file") do |config|
     options[:config] = config
   end
 end.parse!
 
+puts options.to_s
+
 if options[:urn] and options[:url]
-  c = NbUrnClient.new(opts={
+  c = NbUrnClient.new({
                         username: options[:username],
                         password: options[:password],
                         config_file: options[:config] ||= default_config
                       })
+  c.login()
   puts c.register_urn(options[:urn], options[:url]).to_s
+  c.logout()
 else
   $stderr.puts "Usage: register_urn --urn URN --url URL"
 end

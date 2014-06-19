@@ -15,7 +15,7 @@ OptionParser.new do |opts|
   opts.on("--url URL", String, "The URL to set for the URN") do |url|
     options[:url] = url
   end
-  opts.on("--config", String, "A YAML config file") do |config|
+  opts.on("--config CONFIG", String, "A YAML config file") do |config|
     options[:config] = config
   end
 end.parse!
@@ -26,7 +26,9 @@ if options[:urn] and options[:url]
                         password: options[:password],
                         config_file: options[:config] ||= default_config
                       })
-  puts c.add_url(options[:urn], options[:url]).to_s
+  c.login
+  puts c.add_url(options[:urn], options[:url]).inspect
+  c.logout
 else
   $stderr.puts "Usage: add_url --urn URN --url URL"
 end

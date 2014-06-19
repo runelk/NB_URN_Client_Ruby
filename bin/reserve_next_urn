@@ -9,11 +9,8 @@ default_config = File.join(parent_folder, 'config', 'config.yml')
 options = {}
 OptionParser.new do |opts|
   opts.banner = "Usage: register_urn --urn URN --url URL"
-  opts.on("--urn URN", String, "The URN to register") do |urn|
-    options[:urn] = urn
-  end
-  opts.on("--url URL", String, "The URL the URN should point to") do |url_old|
-    options[:url] = url
+  opts.on("--series-code CODE", String) do |series_code|
+    options[:series_code] = series_code
   end
   opts.on("--username USERNAME", String, "Username (if not provided by the config file)") do |username|
     options[:username] = username
@@ -21,18 +18,20 @@ OptionParser.new do |opts|
   opts.on("--password USERNAME", String, "Password (if not provided by the config file)") do |password|
     options[:password] = password
   end
-  opts.on("--config", String, "A YAML config file") do |config|
+  opts.on("--config CONFIG", String, "A YAML config file") do |config|
     options[:config] = config
   end
 end.parse!
 
-if options[:urn] and options[:url]
+if options[:series_code]
   c = NbUrnClient.new(opts={
                         username: options[:username],
                         password: options[:password],
                         config_file: options[:config] ||= default_config
                       })
-  puts c.register_urn(options[:urn], options[:url]).to_s
+  c.login
+  puts c.reserve_next_urn(options[:series_code]).inspect
+  c.logout
 else
   $stderr.puts "Usage: reserve_next_urn --series-code CODE"
 end

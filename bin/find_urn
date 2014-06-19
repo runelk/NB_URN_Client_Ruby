@@ -12,14 +12,14 @@ OptionParser.new do |opts|
   opts.on("--urn URN", String, "The URN to search for") do |urn|
     options[:urn] = urn
   end
-  opts.on("--config", String, "A YAML config file") do |config|
+  opts.on("--config CONFIG", String, "A YAML config file") do |config|
     options[:config] = config
   end
 end.parse!
 
 if options[:urn]
   c = NbUrnClient.new(opts={config_file: options[:config] ||= default_config})
-  puts c.find_urn(options[:urn]).to_s
+  puts c.find_urn(options[:urn]).inspect()
 else
   $stderr.puts "Usage: find_urn --urn URN"
 end
