@@ -25,14 +25,14 @@ OptionParser.new do |opts|
   end
 end.parse!
 
-if options[:urn] and options[:url_old] and options[:url_new]
+if options[:series_code] and options[:url]
   c = NbUrnClient.new(opts={
                         username: options[:username],
                         password: options[:password],
                         config_file: options[:config] ||= default_config
                       })
   c.login
-  puts c.create_urn(options[:series_code], options[:url]).to_s
+  puts c.create_urn(options[:series_code], options[:url]).inspect
   c.logout
 else
   $stderr.puts "Usage: create_urn --series-code CODE --url URL"

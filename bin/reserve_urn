@@ -29,7 +29,7 @@ if options[:urn]
                         config_file: options[:config] ||= default_config
                       })
   c.login
-  puts c.reserve_urn(options[:urn]).to_s
+  puts c.reserve_urn(options[:urn]).inspect
   c.logout
 else
   $stderr.puts "Usage: reserve_urn --urn URN"

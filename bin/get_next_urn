@@ -29,7 +29,7 @@ if options[:series_code]
                         config_file: options[:config] ||= default_config
                       })
   c.login
-  puts c.get_next_urn(options[:series_code]).to_s
+  puts c.get_next_urn(options[:series_code]).inspect
   c.logout
 else
   $stderr.puts "Usage: get_next_urn --series-code CODE"

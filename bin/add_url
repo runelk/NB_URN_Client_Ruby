@@ -8,7 +8,6 @@ default_config = File.join(parent_folder, 'config', 'config.yml')
 
 options = {}
 OptionParser.new do |opts|
-  opts.banner = "Usage find_urn --urn [URN]"
   opts.on("--urn URN", String, "The URN to add") do |urn|
     options[:urn] = urn
   end

@@ -8,7 +8,6 @@ default_config = File.join(parent_folder, 'config', 'config.yml')
 
 options = {}
 OptionParser.new do |opts|
-  opts.banner = "Usage find_urn --urn [URN]"
   opts.on("--urn URN", String, "The URN to search for") do |urn|
     options[:urn] = urn
   end
@@ -19,7 +18,7 @@ end.parse!
 
 if options[:urn]
   c = NbUrnClient.new(opts={config_file: options[:config] ||= default_config})
-  puts c.find_urn(options[:urn]).inspect()
+  puts c.find_urn(options[:urn]).inspect
 else
   $stderr.puts "Usage: find_urn --urn URN"
 end

@@ -8,7 +8,6 @@ default_config = File.join(parent_folder, 'config', 'config.yml')
 
 options = {}
 OptionParser.new do |opts|
-  opts.banner = "Usage: register_urn --urn URN --url URL"
   opts.on("--series-code CODE", String) do |series_code|
     options[:series_code] = series_code
   end

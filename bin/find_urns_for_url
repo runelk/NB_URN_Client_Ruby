@@ -9,7 +9,6 @@ default_config = File.join(parent_folder, 'config', 'config.yml')
 
 options = {}
 OptionParser.new do |opts|
-  opts.banner = "Usage find_urns_for_url --url [URL]"
   opts.on("-u", "--url URL", String, "The URL to find URNs for") do |url|
     options[:url] = url
   end

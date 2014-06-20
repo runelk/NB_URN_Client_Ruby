@@ -32,7 +32,7 @@ if options[:urn] and options[:url]
                         config_file: options[:config] ||= default_config
                       })
   c.login
-  puts c.delete_url(options[:urn], options[:url]).to_s
+  puts c.delete_url(options[:urn], options[:url]).inspect
   c.logout
 else
   $stderr.puts "Usage: delete_url --urn URN --url URL"

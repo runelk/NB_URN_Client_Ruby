@@ -11,10 +11,10 @@ OptionParser.new do |opts|
   opts.on("--urn URN", String, "The URN to add") do |urn|
     options[:urn] = urn
   end
-  opts.on("--url-old URL", String, "The URL old to replace with a new URL") do |old_url|
+  opts.on("--old-url URL", String, "The URL old to replace with a new URL") do |old_url|
     options[:old_url] = old_url
   end
-  opts.on("--url-new URL", String, "The new URL") do |new_url|
+  opts.on("--new-url URL", String, "The new URL") do |new_url|
     options[:new_url] = new_url
   end
   opts.on("--username USERNAME", String, "Username (if not provided by the config file)") do |username|
@@ -35,7 +35,7 @@ if options[:urn] and options[:old_url] and options[:new_url]
                         config_file: options[:config] ||= default_config
                       })
   c.login
-  puts c.replace_url(options[:urn], options[:url_old], options[:url_new]).to_s
+  puts c.replace_url(options[:urn], options[:old_url], options[:new_url]).inspect
   c.logout
 else
   $stderr.puts "Usage: replace_url --urn URN --old-url URL --new-url URL"
