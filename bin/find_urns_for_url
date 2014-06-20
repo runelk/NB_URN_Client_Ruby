@@ -20,7 +20,7 @@ end.parse!
 
 if options[:url]
   c = NbUrnClient.new(opts={config_file: options[:config] ||= default_config})
-  puts c.find_urns_for_url(options[:url]).to_s
+  puts c.find_urns_for_url(options[:url]).inspect
 else
   $stderr.puts "Usage: find_urns_for_url --url URL"
 end

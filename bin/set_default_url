@@ -12,7 +12,7 @@ OptionParser.new do |opts|
   opts.on("--urn URN", String, "The URN to set a default URL for") do |urn|
     options[:urn] = urn
   end
-  opts.on("--urn URL", String, "The default URL to set for the URN") do |url|
+  opts.on("--url URL", String, "The default URL to set for the URN") do |url|
     options[:url] = url
   end
   opts.on("--username USERNAME", String, "Username (if not provided by the config file)") do |username|
@@ -26,14 +26,14 @@ OptionParser.new do |opts|
   end
 end.parse!
 
-if options[:series_code] 
+if options[:urn] and options[:url]
   c = NbUrnClient.new(opts={
                         username: options[:username],
                         password: options[:password],
                         config_file: options[:config] ||= default_config
                       })
   c.login
-  puts c.set_default_url(options[:urn], options[:url]).to_s
+  puts c.set_default_url(options[:urn], options[:url]).inspect
   c.logout
 else
   $stderr.puts "Usage: set_default_url --urn URN --url URL"
